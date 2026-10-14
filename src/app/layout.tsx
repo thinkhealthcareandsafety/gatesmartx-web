@@ -1,23 +1,15 @@
 import type { Metadata, Viewport } from 'next';
-import { Schibsted_Grotesk, Geist, Geist_Mono } from 'next/font/google';
+import { Archivo, Kalam } from 'next/font/google';
 import './globals.css';
 
-// Display face: Schibsted Grotesk — tight, confident headings
-const display = Schibsted_Grotesk({
-  subsets: ['latin'],
-  weight: ['500', '700', '800'],
-  variable: '--font-display',
-});
-
-// Body text: Geist — clean, modern, premium B2B feel
-const sans = Geist({ subsets: ['latin'], variable: '--font-sans' });
-
-// Mono: Geist Mono — only for small labels
-const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-mono' });
+// Archivo: one family from wide stamped headings to condensed engraved labels (width axis).
+const archivo = Archivo({ subsets: ['latin'], axes: ['wdth'], variable: '--font-archivo', display: 'swap' });
+// Kalam, from the Indian Type Foundry: the guard's handwriting on the key-tag inserts.
+const kalam = Kalam({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-hand', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gatesmartx.com'),
-  title: 'GateSmartX · Visitor and gate management for hotels and campuses',
+  title: 'GateSmartX · One live board for everything that crosses your gate',
   description:
     "Check visitors in at the gate, get the host\u2019s approval on WhatsApp or SMS in one tap, and print the pass. Events, material gate passes and couriers in the same system. Aadhaar masked on the device.",
   keywords: [
@@ -50,11 +42,11 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = { themeColor: '#0b0d0c' };
+export const viewport: Viewport = { themeColor: '#15302a' };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en-IN" className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="en-IN" className={`${archivo.variable} ${kalam.variable}`}>
       <body>{children}</body>
     </html>
   );

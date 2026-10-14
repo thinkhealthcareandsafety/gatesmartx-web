@@ -1,457 +1,282 @@
 import {
-  ArrowRight, BadgeCheck, Building2, Check, ChevronDown, Factory,
-  Fingerprint, Hospital, Hotel, KeyRound, Mail, MessageCircle,
-  Package, PartyPopper, Printer, ScanLine, ScrollText,
-  ShieldCheck, Siren, Truck, UsersRound,
+  ArrowRight, Building2, CalendarCheck2, Check, Factory, Fingerprint, Hospital, Hotel, Mail, MessageCircle, Package,
+  Printer, ScanLine, ScrollText, ShieldCheck, Siren, Truck, UserRound, Home as HomeIcon, Plus, KeyRound,
 } from 'lucide-react';
-import GateDemo from '@/components/GateDemo';
-import ScrollReveal from '@/components/ScrollReveal';
+import KeyCabinet from '@/components/KeyCabinet';
 
-const WHATSAPP =
-  'https://wa.me/918010477969?text=' +
-  encodeURIComponent('Hi, I would like a demo of GateSmartX for our property.');
+const WHATSAPP = 'https://wa.me/918010477969?text=' + encodeURIComponent('Hi, I would like a demo of GateSmartX for our property.');
 const EMAIL = 'thinkhealthcareandsafety@gmail.com';
 const MAIL = `mailto:${EMAIL}?subject=${encodeURIComponent('GateSmartX demo')}`;
 
-/* -----------------------------------------------------------------------
-   Data: every item is a real, shipped product capability.
-   No fake metrics, no client names.
------------------------------------------------------------------------ */
+// Every module is a row on the board, in the colour its tags carry everywhere on this page.
 const MODULES = [
   {
-    icon: UsersRound,
-    name: 'Visitors',
-    line: 'Photo, ID and mobile captured at the gate. The host approves on WhatsApp or SMS with one tap, from any phone — no app, no login required.',
-    facts: ['OTP-verified mobile', 'Returning visitors auto-filled', 'Blocked-list alert for the guard'],
+    kind: 'visitor', no: 'V14', icon: UserRound, name: 'Visitors',
+    line: 'Mobile verified by OTP, a live photo and the ID card at the gate. The host lets them in from WhatsApp, Telegram, SMS or email, with one tap and no app.',
+    facts: ['Aadhaar, PAN, licence, passport or voter ID', 'Name and gender checked against the card', 'Returning visitors filled in', 'Blocked list warns the guard'],
   },
   {
-    icon: PartyPopper,
-    name: 'Events and groups',
-    line: 'Weddings, banquets, conferences. Upload the guest list once; every guest gets a QR pass any gate can scan.',
-    facts: ['Excel or CSV import', 'QR scanned by scanner gun or phone', 'Guests signed out when event ends'],
+    kind: 'guest', no: 'E07', icon: CalendarCheck2, name: 'Events and groups',
+    line: 'Weddings, banquets, conferences. Upload the guest list once and every guest gets a QR pass that any gate can scan. No host request at the gate.',
+    facts: ['Excel or CSV guest lists', 'Guests add themselves through one capped link', 'Badges printed for the whole list', 'Signed out when the event ends'],
   },
   {
-    icon: Package,
-    name: 'Material gate passes',
-    line: 'Returnable and non-returnable passes, approved by the head of department before anything leaves the premises.',
-    facts: ['Approval on WhatsApp', 'Partial returns tracked', 'Overdue items flagged automatically'],
+    kind: 'material', no: 'M22', icon: Package, name: 'Material gate passes',
+    line: 'Returnable and non-returnable passes. Nothing leaves until the head of department approves it on WhatsApp, and every return is counted.',
+    facts: ['Approve or reject on WhatsApp', 'Partial returns tracked', 'Overdue items flagged', 'Deliveries in, handed over'],
   },
   {
-    icon: Truck,
-    name: 'Couriers',
-    line: 'Every parcel logged on arrival. The recipient gets a pickup code; the handover is recorded against it.',
-    facts: ['AWB scan on arrival', 'Reminders at 24 and 72 hours', 'Outgoing dispatch register'],
+    kind: 'courier', no: 'C31', icon: Truck, name: 'Couriers',
+    line: 'Every parcel logged on arrival. The recipient gets a pickup code, and the handover is recorded against it.',
+    facts: ['AWB number scan', 'Reminders at 24 and 72 hours', 'Outgoing dispatch register', 'Overrides need a reason'],
   },
-  {
-    icon: KeyRound,
-    name: 'Multiple gates, one record',
-    line: 'In at one gate, out at another — the dashboard shows which gate, which guard and what time. Passes run from 2 hours to 30 days, with re-entry on multi-day passes.',
-    facts: ['Passes 2 hours to 30 days', 'Re-entry on multi-day passes', 'Printed pass with photo'],
-  },
-  {
-    icon: Siren,
-    name: 'Evacuation list',
-    line: 'Everyone on the premises right now, on paper in one click, for fire drills and emergencies.',
-    facts: ['Visitors and event guests', 'Grouped for roll call', 'From any gate or the office'],
-  },
-];
-
-const TRUST = [
-  {
-    icon: Fingerprint,
-    title: 'Aadhaar masked on the device',
-    text: "The first 8 digits are blacked out on the guard\u2019s screen before anything is uploaded. A full encrypted copy, if your policy needs one, is visible only to your Super Admin.",
-  },
-  {
-    icon: ScrollText,
-    title: 'Full audit trail',
-    text: 'Every approval, override, ID view and export is logged with the person and the timestamp. Nothing is deleted; mistakes are voided with a reason.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'DPDP-aware by design',
-    text: "ID images are deleted automatically after the retention period you set. Your data is visible only to your organisation\u2019s authorised people.",
-  },
-  {
-    icon: MessageCircle,
-    title: 'Indian messaging, done right',
-    text: 'WhatsApp Business and DLT-registered SMS, so approvals reach every host on every phone — even a basic handset with no data.',
-  },
-];
-
-const FOR = [
-  { icon: Hotel,      name: 'Hotels and resorts' },
-  { icon: Building2,  name: 'Corporate parks and offices' },
-  { icon: Hospital,   name: 'Hospitals' },
-  { icon: Factory,    name: 'Factories and warehouses' },
-  { icon: UsersRound, name: 'Residential societies' },
 ];
 
 const FAQ = [
-  {
-    q: 'Does the host need to install an app?',
-    a: "No. The host receives a WhatsApp or SMS message with the visitor\u2019s photo and two buttons \u2014 \u201cLet them in\u201d or \u201cDecline\u201d. They tap once. No app, no login, no training needed.",
-  },
-  {
-    q: 'How is Aadhaar handled? Is it compliant with DPDP?',
-    a: "The first 8 digits are masked on the guard\u2019s tablet before upload. If your policy requires a full copy, it is stored encrypted and visible only to your designated Super Admin. ID images are purged automatically after a retention period you configure \u2014 making the system ready for India\u2019s Digital Personal Data Protection Act.",
-  },
-  {
-    q: 'Can it handle large events with hundreds of guests?',
-    a: 'Yes. Upload your guest list as an Excel or CSV file. GateSmartX generates a QR pass for every guest and sends it to them automatically. Any gate, any scanner or phone camera can verify the QR at entry. Guests are signed out automatically when the event ends.',
-  },
-  {
-    q: 'What if we have multiple gates at different entry points?',
-    a: 'All gates share one live record. A visitor checked in at Gate 1 can exit at Gate 3 — the dashboard shows the full trail: gate, guard, time. The evacuation list always reflects whoever is currently on the premises.',
-  },
-  {
-    q: 'Does each property get its own private system?',
-    a: 'Yes. Every client runs on a private copy of GateSmartX at its own address — for example, yourhotel.gatesmartx.com — with its own data, branding and access controls. No data from one property ever appears in another.',
-  },
-  {
-    q: 'How long does it take to go live?',
-    a: 'Most properties are live within a day of account creation. There is nothing to install on existing network infrastructure — guards use tablets or phones, and the admin console runs in any browser.',
-  },
+  ['Do hosts need to install an app?', 'No. The request reaches them on WhatsApp, Telegram, SMS or email with the visitor’s details. One tap lets the visitor in or declines.'],
+  ['What happens to Aadhaar data?', 'The first 8 digits are blacked out on the guard’s tablet before the image is uploaded. A full copy is kept only if you switch it on, encrypted, and only your Super Admin can open it. Images are deleted automatically after the period you set.'],
+  ['We have more than one gate. Does that work?', 'Yes. Every gate uses the same record. Each entry and exit stores the gate, the guard and the time, so a visitor can come in at one gate and leave by another.'],
+  ['What do the guards need?', 'A tablet or phone with a camera at each gate, and any printer the gate computer can print to for passes. Label printers are supported.'],
+  ['How do events with hundreds of guests work?', 'Upload the guest list from Excel or CSV, or share one link where guests add themselves up to a limit. Each guest gets a QR pass; guards scan it at any gate or find the guest by name.'],
+  ['Is our data kept apart from other clients?', 'Yes. Every property runs its own private copy of GateSmartX at its own address, with its own logos and its own data.'],
 ];
 
-/* -----------------------------------------------------------------------
-   Page
------------------------------------------------------------------------ */
+const FOR = [
+  { icon: Hotel, name: 'Hotels and resorts' },
+  { icon: Building2, name: 'Corporate parks and offices' },
+  { icon: Hospital, name: 'Hospitals' },
+  { icon: Factory, name: 'Factories and warehouses' },
+  { icon: HomeIcon, name: 'Residential societies' },
+];
+
 export default function Home() {
   return (
     <>
-      {/* ---- NAV ---- */}
-      <header className="nav">
-        <div className="wrap nav-inner">
-          <a href="#top" className="wordmark" aria-label="GateSmartX home">
-            <Mark />
-            <span className="wm">Gate<span>SmartX</span></span>
-          </a>
-          <nav aria-label="Main">
-            <a href="#how">How it works</a>
-            <a href="#product">Product</a>
-            <a href="#trust">Security</a>
-            <a href="#contact">Contact</a>
+      <a className="skip" href="#main">Skip to content</a>
+      <header className="rail">
+        <div className="wrap rail-inner">
+          <a href="#top" className="wordmark" aria-label="GateSmartX home"><Mark /><span>Gate<b>SmartX</b></span></a>
+          <nav aria-label="Main" className="rail-nav">
+            <a className="strip-link" href="#how">How it works</a>
+            <a className="strip-link" href="#board">The board</a>
+            <a className="strip-link" href="#trust">Security</a>
+            <a className="strip-link" href="#faq">Questions</a>
           </nav>
-          <a className="btn btn-dark" href={WHATSAPP} target="_blank" rel="noopener noreferrer">
-            Book a demo
-          </a>
+          <a className="btn btn-tag btn-sm" href={WHATSAPP} target="_blank" rel="noopener noreferrer">Book a demo</a>
         </div>
       </header>
 
-      <main id="top">
-
-        {/* ---- HERO ---- */}
-        <section className="hero">
-          <div className="wrap hero-grid">
-            <div className="hero-copy">
-              <h1>
-                Every gate.<br />
-                Every visitor.<br />
-                <em>Approved in one tap.</em>
-              </h1>
-              <p className="lead">
-                GateSmartX replaces the paper register at your gate. The guard checks a visitor
-                in, the host approves on WhatsApp, the pass prints — and you know exactly who is
-                on your premises, live.
-              </p>
-              <div className="cta-row">
-                <a
-                  className="btn btn-green btn-lg"
-                  href={WHATSAPP}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle size={18} aria-hidden="true" />
-                  Book a demo on WhatsApp
-                </a>
-                <a className="btn btn-line btn-lg" href="#how">
-                  See how it works
-                  <ArrowRight size={18} aria-hidden="true" />
-                </a>
-              </div>
-
-              {/* Trust badges */}
-              <div className="trust-badges" aria-label="Key reassurances">
-                <span>
-                  <Check size={13} aria-hidden="true" />
-                  WhatsApp approval
-                </span>
-                <span className="tb-sep" aria-hidden="true" />
-                <span>
-                  <Check size={13} aria-hidden="true" />
-                  No app for hosts
-                </span>
-                <span className="tb-sep" aria-hidden="true" />
-                <span>
-                  <Check size={13} aria-hidden="true" />
-                  Aadhaar masked on device
-                </span>
-                <span className="tb-sep" aria-hidden="true" />
-                <span>
-                  <Check size={13} aria-hidden="true" />
-                  DPDP-aware
-                </span>
-              </div>
-            </div>
-
-            <div className="hero-demo">
-              <GateDemo />
-            </div>
-          </div>
-        </section>
-
-        {/* ---- PROBLEM / SOLUTION strip ---- */}
-        <section className="vs" aria-label="Paper register versus GateSmartX">
-          <div className="wrap vs-grid">
-            <ScrollReveal className="vs-col old">
-              <p className="vs-label">Before: the paper register</p>
-              <p className="vs-title">Illegible entries.<br />No accountability.</p>
-              <ul className="vs-list">
-                {[
-                  'Guard writes names by hand — spelling varies',
-                  'No way to know who is on the premises right now',
-                  'Host has no idea a visitor is waiting at the gate',
-                  'ID photos not captured; nothing to review later',
-                  'Material leaving unchecked — no gate pass trail',
-                ].map((t) => (
-                  <li key={t}>
-                    <span className="vs-dot" aria-hidden="true" />
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
-
-            <div className="vs-arrow" aria-hidden="true">
-              <ArrowRight size={20} />
-            </div>
-
-            <ScrollReveal className="vs-col new" delay={80}>
-              <p className="vs-label">With GateSmartX</p>
-              <p className="vs-title">Every entry verified.<br />Every approval on record.</p>
-              <ul className="vs-list">
-                {[
-                  'Mobile OTP, live photo and ID captured at the gate',
-                  'Live list of everyone inside, updated in real time',
-                  'Host approves on WhatsApp with one tap — no app',
-                  'Aadhaar masked on device; audit log of every view',
-                  'Material gate passes approved before anything leaves',
-                ].map((t) => (
-                  <li key={t}>
-                    <span className="vs-dot" aria-hidden="true">
-                      <Check size={10} aria-hidden="true" />
-                    </span>
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </ScrollReveal>
-          </div>
-        </section>
-
-        {/* ---- HOW IT WORKS ---- */}
-        <section className="how" id="how">
+      <main id="main">
+        <section className="hero" id="top">
           <div className="wrap">
-            <ScrollReveal>
-              <h2>From the gate to the pass<br />in under a minute.</h2>
-            </ScrollReveal>
-            <ol className="steps">
-              <li>
-                <ScanLine aria-hidden="true" />
-                <h3>Guard checks them in</h3>
-                <p>
-                  Mobile OTP, live photo and the visitor&rsquo;s ID — masked on the tablet.
-                  Returning visitors are filled in automatically.
-                </p>
-              </li>
-              <li>
-                <MessageCircle aria-hidden="true" />
-                <h3>Host approves</h3>
-                <p>
-                  A WhatsApp or SMS arrives with the visitor&rsquo;s photo and two buttons:
-                  &ldquo;Let them in&rdquo; or &ldquo;Decline&rdquo;. No app, no login.
-                </p>
-              </li>
-              <li>
-                <Printer aria-hidden="true" />
-                <h3>Pass prints</h3>
-                <p>
-                  The guard gets a chime, the pass prints with photo and validity, and
-                  the visitor appears on the live list until they leave.
-                </p>
-              </li>
-            </ol>
+            <div className="hero-head">
+              <h1>Everything that crosses your gate. <span>One live board.</span></h1>
+              <div className="hero-side">
+                <p>GateSmartX replaces the gate register. Guards check people and goods in, hosts approve on WhatsApp in one tap, and every gate shows who is on your premises right now.</p>
+                <div className="cta-row">
+                  <a className="btn btn-tag" href={WHATSAPP} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />Book a demo on WhatsApp</a>
+                  <a className="btn btn-line" href="#how">See how it works<ArrowRight size={18} /></a>
+                </div>
+              </div>
+            </div>
+            <KeyCabinet />
           </div>
         </section>
 
-        {/* ---- PRODUCT modules ---- */}
-        <section className="product" id="product">
-          <div className="wrap product-grid">
-            <div className="product-head">
-              <ScrollReveal>
-                <h2>One system for everything that crosses your gate.</h2>
-                <p>
-                  People, events, material and parcels — each with its own register,
-                  all on the same screen your guards already use.
-                </p>
-              </ScrollReveal>
+        <section className="how" id="how" aria-labelledby="how-h">
+          <div className="wrap">
+            <div className="how-head">
+              <h2 id="how-h">One tap at the host’s end. Everything moves at the gate.</h2>
+              <p>The guard checks the visitor in, the host taps once on WhatsApp, and that single tap hangs the tag, prints the pass and puts the name on the evacuation roll.</p>
             </div>
-            <ul className="modules" aria-label="Product modules">
-              {MODULES.map(({ icon: Icon, name, line, facts }) => (
-                <li key={name}>
-                  <span className="m-icon" aria-hidden="true"><Icon /></span>
-                  <div>
-                    <h3>{name}</h3>
+            <div className="flow" aria-label="Sample: one visitor from check-in to the board">
+              <div className="flow-step">
+                <span className="strip">1 · At the gate</span>
+                <div className="mini-form">
+                  <span><i>Mobile</i>98••• ••210 <Check size={13} /></span>
+                  <span><i>Name</i>Ravi Kumar</span>
+                  <span><i>Company</i>Tata Projects</span>
+                  <span><i>Aadhaar</i><b className="redact" />4821</span>
+                </div>
+                <h3><ScanLine size={20} />The guard checks them in</h3>
+                <p>Mobile with OTP, a live photo and the ID card, masked on the tablet. Returning visitors fill in by themselves.</p>
+              </div>
+              <span className="wire" aria-hidden="true" />
+              <div className="flow-step">
+                <span className="strip">2 · On the host’s phone</span>
+                <div className="wa">
+                  <p><b>Ravi Kumar</b> from Tata Projects is at the gate to meet you.</p>
+                  <span className="wa-btn wa-yes"><Check size={14} />Let them in</span>
+                  <span className="wa-btn">Decline</span>
+                </div>
+                <h3><MessageCircle size={20} />The host taps once</h3>
+                <p>WhatsApp, Telegram, SMS or email. No app, no login, from any phone.</p>
+              </div>
+              <span className="wire wire-fan" aria-hidden="true" />
+              <div className="flow-step flow-out">
+                <span className="strip">3 · The same second</span>
+                <ul className="outcomes">
+                  <li>
+                    <span className="out-hook" aria-hidden="true"><span className="peg" /><span className="tag tag-lg k-visitor"><span className="ring" /><span className="insert">V14</span></span></span>
+                    <span><b>Tag on the board</b>Visitors row, hook 14</span>
+                  </li>
+                  <li>
+                    <span className="pass" aria-hidden="true"><b>14</b>Ravi Kumar<small>valid till 2:42 pm</small><em>R. Singh</em></span>
+                    <span><b>Pass printed</b>Photo, host and validity</span>
+                  </li>
+                  <li>
+                    <span className="roll-line" aria-hidden="true"><i />Ravi Kumar<small>Front Office</small></span>
+                    <span><b>On the evacuation roll</b>Until he checks out</span>
+                  </li>
+                </ul>
+                <h3><Printer size={20} />Tag, pass and roll, together</h3>
+                <p>The guard hears a chime. Nothing to copy into a register.</p>
+              </div>
+            </div>
+            <p className="sample-note">Sample data</p>
+          </div>
+        </section>
+
+        <section className="board" id="board" aria-labelledby="board-h">
+          <div className="wrap">
+            <div className="board-head">
+              <h2 id="board-h">One board for every gate.</h2>
+              <p>People, events, material and parcels each hang in their own colour, on the same screen your guards already use, across every gate.</p>
+            </div>
+            <ul className="modules">
+              {MODULES.map(({ kind, no, icon: Icon, name, line, facts }) => (
+                <li key={name} className={`module k-${kind}`}>
+                  <div className="module-tag" aria-hidden="true">
+                    <span className="peg" />
+                    <span className="tag tag-xl"><span className="ring" /><span className="insert">{no}</span></span>
+                  </div>
+                  <div className="module-body">
+                    <h3><Icon size={22} />{name}</h3>
                     <p>{line}</p>
-                    <ul className="facts" aria-label={`${name} highlights`}>
-                      {facts.map((f) => (
-                        <li key={f}>
-                          <BadgeCheck size={14} aria-hidden="true" />
-                          {f}
-                        </li>
-                      ))}
-                    </ul>
+                    <ul className="facts">{facts.map((f) => <li key={f}><Check size={15} />{f}</li>)}</ul>
                   </div>
                 </li>
               ))}
             </ul>
-          </div>
-        </section>
-
-        {/* ---- TRUST / SECURITY ---- */}
-        <section className="trust" id="trust">
-          <div className="wrap">
-            <ScrollReveal>
-              <h2>Security your auditors will sign off.</h2>
-            </ScrollReveal>
-            <div className="trust-grid">
-              {TRUST.map(({ icon: Icon, title, text }) => (
-                <div key={title}>
-                  <Icon aria-hidden="true" />
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ---- YOUR OWN ADDRESS ---- */}
-        <section className="own">
-          <div className="wrap own-grid">
-            <ScrollReveal>
+            <div className="gates-row">
               <div>
-                <h2>Your property gets its own address.</h2>
-                <p>
-                  Every client runs on a private copy of GateSmartX at its own
-                  sub-domain — with its own data, its own logos and its own access
-                  controls. One property&rsquo;s records never sit next to another&rsquo;s.
-                </p>
+                <h3><KeyRound size={22} />Several gates, one record</h3>
+                <p>In at one gate, out at another. Every movement stores the gate, the guard and the time. Passes run from 2 hours to 30 days, with re-entry on multi-day passes.</p>
               </div>
-            </ScrollReveal>
-            <div className="addr" aria-label="Sample client address (illustrative)">
-              <div className="addr-bar">
-                <i aria-hidden="true" />
-                <i aria-hidden="true" />
-                <i aria-hidden="true" />
-                <span>
-                  <ShieldCheck size={13} aria-hidden="true" />
-                  yourhotel.gatesmartx.com
-                </span>
-              </div>
-              <div className="addr-body">
-                <span className="addr-logo">Your logo</span>
-                <span className="addr-line" aria-hidden="true" />
-                <span className="addr-line short" aria-hidden="true" />
-                <span className="addr-btn">Sign in</span>
+              <div className="gate-plates" aria-hidden="true">
+                <span>Main gate</span><span>Staff entrance</span><span>Service gate</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ---- INDUSTRIES ---- */}
-        <section className="for">
+        <section className="drill" aria-labelledby="drill-h">
+          <div className="wrap drill-grid">
+            <div>
+              <Siren size={30} className="drill-icon" />
+              <h2 id="drill-h">Fire alarm? Everyone on the board, on paper, in one click.</h2>
+              <p>The evacuation list prints from any gate or the office: visitors, event guests and contractors still inside, grouped for roll call.</p>
+            </div>
+            <div className="sheet" aria-label="Sample evacuation list">
+              <div className="sheet-head"><b>Evacuation list</b><span>Sample · 10:42 am</span></div>
+              <ol>
+                <li className="k-visitor"><i />Ravi Kumar<span>Visitor · Front Office</span></li>
+                <li className="k-visitor"><i />Anita Rao<span>Visitor · Engineering</span></li>
+                <li className="k-guest"><i />Sharma wedding<span>38 guests inside</span></li>
+                <li className="k-visitor"><i />Imran Shaikh<span>Contractor · Facilities</span></li>
+                <li className="k-courier"><i />Blue Dart agent<span>Courier · Main gate</span></li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section className="trust" id="trust" aria-labelledby="trust-h">
+          <div className="wrap trust-grid">
+            <div className="trust-head">
+              <h2 id="trust-h">Security your auditors will sign off.</h2>
+              <div className="idcard" aria-label="Sample: an Aadhaar card with the first 8 digits blacked out">
+                <span className="id-photo" aria-hidden="true" />
+                <span className="id-lines" aria-hidden="true"><i /><i /><i /></span>
+                <span className="id-no"><b className="redact" /><b className="redact" />4821</span>
+                <span className="id-note">Masked on the tablet · Sample</span>
+              </div>
+            </div>
+            <div className="trust-body">
+              <div className="ledger" aria-label="Sample audit log">
+                <div className="ledger-head"><ScrollText size={18} /><b>Audit log</b><span>Sample</span></div>
+                <ol>
+                  <li><time>10:41</time><span><b>Guard, Main gate</b> checked in V14 · Aadhaar masked on the tablet</span></li>
+                  <li><time>10:42</time><span><b>Priya Shah</b> let V14 in on WhatsApp</span></li>
+                  <li><time>10:58</time><span><b>Admin</b> viewed the masked ID of V14</span></li>
+                  <li><time>11:05</time><span><b>Super Admin</b> opened the full ID · reason recorded</span></li>
+                  <li><time>23:59</time><span><b>System</b> deleted ID images past the retention period</span></li>
+                </ol>
+              </div>
+              <dl className="guarantees">
+                <div><dt><Fingerprint size={18} />Aadhaar masked on the device</dt><dd>The first 8 digits are blacked out on the guard’s tablet before anything is uploaded. A full copy, if your policy needs one, is encrypted and opened only by your Super Admin.</dd></div>
+                <div><dt><ScrollText size={18} />Everything on record</dt><dd>Every approval, override, view of an ID and download is logged with the person and the time. Mistakes are voided with a reason, never deleted.</dd></div>
+                <div><dt><ShieldCheck size={18} />DPDP-aware</dt><dd>ID images are deleted automatically after the period you set, and only your authorised people see your data.</dd></div>
+                <div><dt><MessageCircle size={18} />Indian messaging, done properly</dt><dd>WhatsApp Business and DLT-registered SMS, so approvals reach every host on every phone.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </section>
+
+        <section className="plaque-band" aria-labelledby="live-h">
+          <div className="wrap plaque-grid">
+            <div className="plaque">
+              <span className="strip strip-ink">In service</span>
+              <h2 id="live-h">Live at a five-star hotel complex in New Delhi.</h2>
+              <p>Made in India by Think Health Care and Safety, the team behind AED SmartX.</p>
+            </div>
+            <div className="address">
+              <h3>Your property gets its own address.</h3>
+              <p>Every client runs a private copy at its own address, with its own logos and its own data. One property’s records never sit next to another’s.</p>
+              <span className="url"><ShieldCheck size={16} />yourproperty<b>.gatesmartx.com</b></span>
+            </div>
+          </div>
+        </section>
+
+        <section className="for" aria-labelledby="for-h">
           <div className="wrap">
-            <ScrollReveal>
-              <h2>Made for properties where the gate matters.</h2>
-            </ScrollReveal>
-            <ul className="for-list" aria-label="Industries">
-              {FOR.map(({ icon: Icon, name }) => (
-                <li key={name}>
-                  <Icon aria-hidden="true" />
-                  {name}
-                </li>
-              ))}
+            <h2 id="for-h">Made for properties where the gate matters.</h2>
+            <ul className="for-list">
+              {FOR.map(({ icon: Icon, name }) => <li key={name}><span className="peg" aria-hidden="true" /><span className="for-tag"><Icon size={18} />{name}</span></li>)}
             </ul>
           </div>
         </section>
 
-        {/* ---- FAQ ---- */}
-        <section className="faq">
-          <div className="wrap">
-            <ScrollReveal>
-              <h2>Common questions.</h2>
-            </ScrollReveal>
-            <div className="faq-list" role="list">
-              {FAQ.map(({ q, a }) => (
-                <details key={q} className="faq-item" role="listitem">
-                  <summary>
-                    {q}
-                    <span className="faq-chevron" aria-hidden="true">
-                      <ChevronDown size={13} strokeWidth={2.5} />
-                    </span>
-                  </summary>
-                  <p className="faq-body">{a}</p>
+        <section className="faq" id="faq" aria-labelledby="faq-h">
+          <div className="wrap faq-grid">
+            <h2 id="faq-h">Questions facility managers ask first.</h2>
+            <div className="faq-list">
+              {FAQ.map(([q, a]) => (
+                <details key={q}>
+                  <summary>{q}<Plus size={18} aria-hidden="true" /></summary>
+                  <p>{a}</p>
                 </details>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ---- CLOSING CTA ---- */}
-        <section className="cta" id="contact">
-          <div className="wrap cta-inner">
-            <ScrollReveal>
-              <h2>See it at your gate.</h2>
-              <p>
-                A 20-minute demo on your phone: we check a visitor in live,
-                you approve it on WhatsApp — from your own handset.
-              </p>
-              <div className="cta-row">
-                <a
-                  className="btn btn-green btn-lg"
-                  href={WHATSAPP}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <MessageCircle size={18} aria-hidden="true" />
-                  WhatsApp +91&nbsp;80104&nbsp;77969
-                </a>
-                <a className="btn btn-line btn-lg" href={MAIL}>
-                  <Mail size={18} aria-hidden="true" />
-                  {EMAIL}
-                </a>
-              </div>
-            </ScrollReveal>
+        <section className="close" id="contact" aria-labelledby="close-h">
+          <div className="wrap close-inner">
+            <span className="tag tag-xl k-guest close-tag" aria-hidden="true"><span className="ring" /><span className="insert">You</span></span>
+            <h2 id="close-h">See your gate on one board.</h2>
+            <p>A 20-minute demo on your phone: we check a visitor in, you approve it on WhatsApp.</p>
+            <div className="cta-row">
+              <a className="btn btn-tag btn-lg" href={WHATSAPP} target="_blank" rel="noopener noreferrer"><MessageCircle size={18} />WhatsApp +91 80104 77969</a>
+              <a className="btn btn-line btn-lg" href={MAIL}><Mail size={18} />{EMAIL}</a>
+            </div>
           </div>
         </section>
-
       </main>
 
-      {/* ---- FOOTER ---- */}
       <footer className="foot">
         <div className="wrap foot-inner">
-          <span className="wordmark small">
-            <Mark />
-            <span className="wm">Gate<span>SmartX</span></span>
-          </span>
-          <span>
-            A product of Think Health Care and Safety · Also from us:{' '}
-            <a href="https://aedsmartx.com" target="_blank" rel="noopener noreferrer">
-              AED SmartX
-            </a>
-          </span>
+          <span className="wordmark small"><Mark /><span>Gate<b>SmartX</b></span></span>
+          <span>A product of Think Health Care and Safety · Also from us: <a href="https://aedsmartx.com" target="_blank" rel="noopener noreferrer">AED SmartX</a></span>
           <span>© {new Date().getFullYear()} GateSmartX</span>
         </div>
       </footer>
@@ -459,29 +284,13 @@ export default function Home() {
   );
 }
 
-/* -----------------------------------------------------------------------
-   Mark: a gate arch with the approval tick inside it.
-   Kept exactly as shipped.
------------------------------------------------------------------------ */
+// The mark: a gate arch with the approval tick inside it.
 function Mark() {
   return (
     <svg className="mark" viewBox="0 0 32 32" aria-hidden="true">
       <rect width="32" height="32" rx="8" fill="currentColor" />
-      <path
-        d="M9 25V15a7 7 0 0 1 14 0v10"
-        fill="none"
-        stroke="var(--mark-ink, #fff)"
-        strokeWidth="2.4"
-        strokeLinecap="round"
-      />
-      <path
-        d="m12.4 19.4 2.7 2.7 4.8-5.2"
-        fill="none"
-        stroke="var(--green)"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M9 25V15a7 7 0 0 1 14 0v10" fill="none" stroke="var(--mark-ink)" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="m12.4 19.4 2.7 2.7 4.8-5.2" fill="none" stroke="var(--tag-green)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
