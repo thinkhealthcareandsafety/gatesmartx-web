@@ -2,18 +2,18 @@
 version: 1
 slug: "src-app-page-tsx"
 primary_target: "src/app/page.tsx"
-related_targets: ["src/app/globals.css","src/components/GateDemo.tsx"]
+related_targets: ["src/app/globals.css","src/components/HeroDevices.tsx"]
 ---
 
 # gatesmartx.com landing surface brief
 
-Mode: persuade. Audience: facility managers of any Indian property (hotels, offices, hospitals, factories, societies). Action: book a demo on WhatsApp (email second). Belief to land: one system for every gate. Proof: the product shown at work with sample data (labelled), "live at a five-star hotel complex in New Delhi" (never named), made in India by Think Health Care and Safety, makers of AED SmartX. Build path: code-led (no image generation).
+Mode: persuade. Audience: facility managers of any Indian property. Action: book a demo on WhatsApp (email second). Belief: one system for every gate. Proof: product shown on devices with sample data (labelled); live at a five-star hotel complex in New Delhi (never named); made in India by Think Health Care and Safety. Build path: code-led.
 
 ## Direction contract
 
-THESIS: The steel key cabinet in every security cabin, made live: one board where every visitor, guest, parcel and gate pass hangs on its own hook until it leaves. Refuses the dark SaaS hero with a phone mockup and a card grid.
-OWN-WORLD: Enamelled cabinet green owning whole sections, a darker perforated back panel, brass hook rails and engraved label strips, coloured plastic key tags with white paper inserts written by hand: red visitor, yellow event guest, blue material, green courier. Powder-coat light grey for the quiet sections. Archivo (wide and condensed cuts) for headings and labels, Kalam for handwriting on tags. Yellow tag-shaped primary button. Raises: a live "now" light sweeping the rows (from the step row); one colour code unbroken across every section (from the livery); one tap propagating to tag, pass and roster (from the Miura sheet); total commitment of the green ground (from the shader portal).
-STORY: The visitor sees their own gate cabin, understands that everything crossing the gate lands on one live board, believes it because they watch an approval hang a tag, and books a demo.
-FIRST VIEWPORT: Brass label rail as nav. Headline across the top of the cabinet in wide Archivo, subline and yellow Book a demo button on the rail beside it. Below, the cabinet interior full width: four labelled hook rows with tags; every few seconds a WhatsApp approval toast lands and a tag swings onto a free hook, another leaves. Counter "on premises now". Sample data label.
-FORM: The Key Cabinet, my list position 7 of 7, seed key 08c52ce6.
+THESIS: Apple-calm. The product, shown beautifully on a tablet and a phone, does the persuading; the page gets out of its way. User took the category standard and named Apple as the bar, after rejecting The Key Cabinet.
+OWN-WORLD: White and #f5f5f7 grounds, ink #1d1d1f, two-tone headlines (ink + grey), one black band, a single green used only for approved states and text links. Inter with optical sizes (closest open face to Apple system type). Black pill buttons, 28px bento tiles, translucent blurred nav.
+STORY: The visitor sees the gate tablet and the host's phone, watches one tap let a visitor in, understands every gate is one system, and books a demo.
+FIRST VIEWPORT: Centered two-line headline 'Every gate. One calm system.', grey lead, black Book a demo pill and green 'See how it works' link; below, the tablet (guard desk) with the phone overlapping right, looping waiting, tap, let in. Phone only on mobile.
+FORM: Canon (category standard at Apple craft), taken by the user; previous roll 08c52ce6 (The Key Cabinet) rejected.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance

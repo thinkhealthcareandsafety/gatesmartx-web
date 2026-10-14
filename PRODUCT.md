@@ -35,6 +35,7 @@ A guard at a gate tablet checks people and goods in; hosts (residents, staff, de
 - Contact: WhatsApp +91 80104 77969 (wa.me/918010477969), email thinkhealthcareandsafety@gmail.com.
 - Footer: "A product of Think Health Care and Safety · Also from us: AED SmartX" (aedsmartx.com).
 - Never show client names or logos without written permission.
+- Standing look (user's choice, 2026-10-14): Apple-like. Premium, minimal, exclusive: white space, large calm type, the product shown on real devices, almost no colour. The user rejected decorative or themed worlds (key tags, stickers, loud colour) as cheap.
 
 ## Evidence on Hand
 - The product itself: real flows can be shown as a demonstration with sample data, labelled "Sample data".
