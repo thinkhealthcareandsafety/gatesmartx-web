@@ -352,6 +352,7 @@ h3 { font-size: 20px; font-stretch: 106%; font-weight: 700; line-height: 1.25; l
 .sample-note { margin-top: 32px; font-size: 12px; font-weight: 700; font-stretch: 78%; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
 
 .trust-body { display: grid; gap: 40px; }
+.trust-body .plate-rail { margin-bottom: -40px; }
 .ledger { border-radius: 8px; background: #fff; border: 1px solid var(--steel-line); box-shadow: 0 20px 34px -28px rgba(19, 34, 29, .7); overflow: hidden; }
 .ledger-head { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: var(--green-800); color: var(--text); }
 .ledger-head svg { color: var(--brass-hi); }
@@ -394,3 +395,35 @@ h3 { font-size: 20px; font-stretch: 106%; font-weight: 700; line-height: 1.25; l
 .ledger-head b { color: var(--text); }
 .roll-line small { padding-left: 0; }
 .outcomes > li { grid-template-columns: 108px minmax(0, 1fr); }
+@media (max-width: 720px) { .guarantees { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- polish round: sweeping now band, hung plates, brass nav rail ---------- */
+.now-band { position: absolute; top: 0; bottom: 0; left: -40px; z-index: 0; width: 80px; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(243, 194, 51, .10) 35%, rgba(243, 194, 51, .16) 50%, rgba(243, 194, 51, .10) 65%, transparent); transition: transform 1.1s var(--ease); }
+.cab-row { position: relative; z-index: 1; }
+.row-label { transition: box-shadow .4s, background-color .4s; }
+.row-label.lit { background: #fff8dc; box-shadow: inset 0 1px 2px rgba(0, 0, 0, .28), 0 0 0 2px rgba(243, 194, 51, .7), 0 0 18px rgba(243, 194, 51, .45); }
+
+.plates { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 28px; padding-top: 34px; }
+.plate-rail { display: block; height: 7px; border-radius: 2px; background: linear-gradient(180deg, var(--brass-hi), var(--brass) 55%, var(--brass-lo)); box-shadow: 0 3px 5px rgba(0, 0, 0, .25); }
+.plates > li { position: relative; padding: 22px 22px 20px; border-radius: 4px; background: var(--enamel); box-shadow: inset 0 0 0 1px #d2d0c5, inset 0 0 0 5px var(--enamel), inset 0 0 0 6px #cfcdc2, 0 14px 24px -18px rgba(19, 34, 29, .7); }
+.plates > li:nth-child(odd) { transform: rotate(-.6deg); }
+.plates > li:nth-child(even) { transform: rotate(.5deg); margin-top: 14px; }
+.plates .chain { position: absolute; top: -30px; left: 50%; width: 2px; height: 32px; margin-left: -1px; background: repeating-linear-gradient(180deg, #b9bdba 0 4px, transparent 4px 6px); }
+.plates .chain::before, .plates .chain::after { content: ''; position: absolute; left: -3px; width: 8px; height: 8px; border-radius: 50%; background: var(--brass); }
+.plates .chain::before { top: -2px; }
+.plates .chain::after { bottom: -2px; }
+.plates h3 { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 800; font-stretch: 80%; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); text-shadow: 0 1px 0 #fff; }
+.plates h3 svg { color: var(--green-600); }
+.plates p { margin-top: 10px; color: var(--ink-2); font-size: 15px; }
+
+.brass-rail { gap: 2px; padding: 4px; border-radius: 5px; background: linear-gradient(180deg, var(--brass-hi), var(--brass) 55%, #a87d2c); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 3px 6px rgba(0, 0, 0, .45); }
+.brass-rail .strip-link { background: transparent; color: #2a1d05; box-shadow: none; text-shadow: 0 1px 0 rgba(255, 240, 200, .55), 0 -1px 0 rgba(60, 40, 5, .35); }
+.brass-rail .strip-link + .strip-link { border-left: 1px solid rgba(60, 40, 5, .3); border-radius: 0; }
+.brass-rail .strip-link:hover { color: #000; background: rgba(255, 255, 255, .18); box-shadow: none; }
+@media (max-width: 720px) {
+  .plates { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+  .plates > li:nth-child(even) { margin-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .now-band { display: none; } }
+.trust-body > .plate-rail + .plates { margin-top: -44px; }
+@media (min-width: 721px) { .plates > li:nth-child(2) .chain { top: -44px; height: 46px; } }

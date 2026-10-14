@@ -56,7 +56,7 @@ export default function Home() {
       <header className="rail">
         <div className="wrap rail-inner">
           <a href="#top" className="wordmark" aria-label="GateSmartX home"><Mark /><span>Gate<b>SmartX</b></span></a>
-          <nav aria-label="Main" className="rail-nav">
+          <nav aria-label="Main" className="rail-nav brass-rail">
             <a className="strip-link" href="#how">How it works</a>
             <a className="strip-link" href="#board">The board</a>
             <a className="strip-link" href="#trust">Security</a>
@@ -91,8 +91,7 @@ export default function Home() {
             </div>
             <div className="flow" aria-label="Sample: one visitor from check-in to the board">
               <div className="flow-step">
-                <span className="strip">1 · At the gate</span>
-                <div className="mini-form">
+                                <div className="mini-form">
                   <span><i>Mobile</i>98••• ••210 <Check size={13} /></span>
                   <span><i>Name</i>Ravi Kumar</span>
                   <span><i>Company</i>Tata Projects</span>
@@ -103,8 +102,7 @@ export default function Home() {
               </div>
               <span className="wire" aria-hidden="true" />
               <div className="flow-step">
-                <span className="strip">2 · On the host’s phone</span>
-                <div className="wa">
+                                <div className="wa">
                   <p><b>Ravi Kumar</b> from Tata Projects is at the gate to meet you.</p>
                   <span className="wa-btn wa-yes"><Check size={14} />Let them in</span>
                   <span className="wa-btn">Decline</span>
@@ -114,11 +112,10 @@ export default function Home() {
               </div>
               <span className="wire wire-fan" aria-hidden="true" />
               <div className="flow-step flow-out">
-                <span className="strip">3 · The same second</span>
-                <ul className="outcomes">
+                                <ul className="outcomes">
                   <li>
                     <span className="out-hook" aria-hidden="true"><span className="peg" /><span className="tag tag-lg k-visitor"><span className="ring" /><span className="insert">V14</span></span></span>
-                    <span><b>Tag on the board</b>Visitors row, hook 14</span>
+                    <span><b>Tag on the board</b>Visitors row, hook 04</span>
                   </li>
                   <li>
                     <span className="pass" aria-hidden="true"><b>14</b>Ravi Kumar<small>valid till 2:42 pm</small><em>R. Singh</em></span>
@@ -212,12 +209,13 @@ export default function Home() {
                   <li><time>23:59</time><span><b>System</b> deleted ID images past the retention period</span></li>
                 </ol>
               </div>
-              <dl className="guarantees">
-                <div><dt><Fingerprint size={18} />Aadhaar masked on the device</dt><dd>The first 8 digits are blacked out on the guard’s tablet before anything is uploaded. A full copy, if your policy needs one, is encrypted and opened only by your Super Admin.</dd></div>
-                <div><dt><ScrollText size={18} />Everything on record</dt><dd>Every approval, override, view of an ID and download is logged with the person and the time. Mistakes are voided with a reason, never deleted.</dd></div>
-                <div><dt><ShieldCheck size={18} />DPDP-aware</dt><dd>ID images are deleted automatically after the period you set, and only your authorised people see your data.</dd></div>
-                <div><dt><MessageCircle size={18} />Indian messaging, done properly</dt><dd>WhatsApp Business and DLT-registered SMS, so approvals reach every host on every phone.</dd></div>
-              </dl>
+              <span className="plate-rail" aria-hidden="true" />
+              <ul className="plates" aria-label="How ID data is protected">
+                <li><span className="chain" aria-hidden="true" /><h3><Fingerprint size={18} />Aadhaar masked on the device</h3><p>The first 8 digits are blacked out on the guard’s tablet before anything is uploaded. A full copy, if your policy needs one, is encrypted and opened only by your Super Admin.</p></li>
+                <li><span className="chain" aria-hidden="true" /><h3><ScrollText size={18} />Everything on record</h3><p>Every approval, override, view of an ID and download is logged with the person and the time. Mistakes are voided with a reason, never deleted.</p></li>
+                <li><span className="chain" aria-hidden="true" /><h3><ShieldCheck size={18} />DPDP-aware</h3><p>ID images are deleted automatically after the period you set, and only your authorised people see your data.</p></li>
+                <li><span className="chain" aria-hidden="true" /><h3><MessageCircle size={18} />Indian messaging, done properly</h3><p>WhatsApp Business and DLT-registered SMS, so approvals reach every host on every phone.</p></li>
+              </ul>
             </div>
           </div>
         </section>
@@ -225,7 +223,6 @@ export default function Home() {
         <section className="plaque-band" aria-labelledby="live-h">
           <div className="wrap plaque-grid">
             <div className="plaque">
-              <span className="strip strip-ink">In service</span>
               <h2 id="live-h">Live at a five-star hotel complex in New Delhi.</h2>
               <p>Made in India by Think Health Care and Safety, the team behind AED SmartX.</p>
             </div>

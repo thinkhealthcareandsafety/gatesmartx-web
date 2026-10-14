@@ -61,8 +61,10 @@ export default function KeyCabinet() {
         const next = prev.map((row) => row.slice());
         const ri = [0, 1, 0, 3, 2, 0, 1, 3][n.current % 8];
         const row = next[ri];
-        const empties = row.map((s, i) => (s ? -1 : i)).filter((i) => i >= 0);
-        const full = row.map((s, i) => (s ? i : -1)).filter((i) => i >= 0);
+        // Only hooks this screen shows: every arrival and departure must be one the visitor can see.
+        const shown = matchMedia('(max-width: 400px)').matches ? 5 : matchMedia('(max-width: 720px)').matches ? 6 : matchMedia('(max-width: 1120px)').matches ? 8 : HOOKS;
+        const empties = row.map((s, i) => (s || i >= shown ? -1 : i)).filter((i) => i >= 0);
+        const full = row.map((s, i) => (s && i < shown ? i : -1)).filter((i) => i >= 0);
         const arrive = empties.length > 0 && (full.length < 6 || n.current % 3 !== 0);
         const kind = ROWS[ri].kind;
         if (arrive) {
@@ -103,10 +105,11 @@ export default function KeyCabinet() {
       <span className="hinge h1" aria-hidden="true" /><span className="hinge h2" aria-hidden="true" />
       <span className="lock" aria-hidden="true"><i /></span>
       <div className="cab-back" ref={back}>
+        {now && <span className="now-band" style={{ transform: `translateX(${now.x}px)` }} aria-hidden="true" />}
         {now && <span className="now-light" style={{ transform: `translate(${now.x}px, ${now.y}px)` }} aria-hidden="true" />}
         {ROWS.map((r, ri) => (
           <div className={`cab-row k-${r.kind}`} key={r.kind}>
-            <span className="row-label"><i aria-hidden="true" />{r.label}</span>
+            <span className={`row-label${fresh?.startsWith(`${ri}-`) ? ' lit' : ''}`}><i aria-hidden="true" />{r.label}</span>
             <ol className="hooks" aria-label={`${r.label} on premises`}>
               {board[ri].map((slot, hi) => (
                 <li key={hi} data-hook={`${ri}-${hi}`} className={`hook${fresh === `${ri}-${hi}` ? ' fresh' : ''}`}>
